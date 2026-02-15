@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>nana nani Masti Game</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(-45deg,#ff6a00,#ee0979,#00c9ff,#92fe9d);
+    background-size:400% 400%;
+    animation:gradientMove 8s ease infinite;
+    overflow:hidden;
+}
+
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.box{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.3);
+    padding:45px 35px;
+    border-radius:25px;
+    width:400px;
+    text-align:center;
+    box-shadow:0 25px 60px rgba(0,0,0,0.4);
+    transition:0.4s ease;
+}
+
+.box:hover{
+    transform:translateY(-10px) scale(1.03);
+}
+
+h2{
+    color:white;
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:25px;
+    letter-spacing:1px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin:12px 0;
+    border-radius:15px;
+    border:none;
+    outline:none;
+    font-size:15px;
+    font-weight:600;
+    text-align:center;
+    background:rgba(255,255,255,0.9);
+    transition:0.3s;
+}
+
+input:focus{
+    transform:scale(1.05);
+    box-shadow:0 0 15px #ff00cc;
+}
+
+button{
+    margin-top:20px;
+    padding:14px 30px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(45deg,#ff0080,#ff8c00);
+    background-size:200%;
+    transition:0.4s;
+    box-shadow:0 8px 25px rgba(0,0,0,0.5);
+}
+
+button:hover{
+    background-position:right center;
+    transform:scale(1.1);
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+
+.result{
+    margin-top:30px;
+    font-size:18px;
+    font-weight:700;
+    color:white;
+    line-height:1.6;
+    animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+    from{transform:scale(0.6);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+body::before,
+body::after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    background:rgba(255,255,255,0.1);
+    border-radius:50%;
+    filter:blur(120px);
+    animation:float 6s ease-in-out infinite;
+}
+
+body::before{
+    top:-100px;
+    left:-100px;
+}
+
+.emoji {
+    position: fixed;
+    top: -50px;
+    animation: fall linear forwards;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+body::after{
+    bottom:-100px;
+    right:-100px;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(20px);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Chunnu Fill Karyo🤔</h2>
+
+    <input type="text" id="nana" placeholder="Nana Ka Naam Likhna😁">
+    <input type="text" id="nani" placeholder="Nani Ka Naam Likhna😁">
+
+    <button onclick="makeJoke()">Button Dabao (7 Time)😡</button>
+
+    <div class="result" id="output"></div>
+</div>
+
+<script>
+
+// Emoji System
+const emojis = ["😂","🤣","😁","😜","🔥","💀","😎","🤪"];
+let emojiInterval;
+
+function startEmojiRain(){
+    if(emojiInterval) return;
+
+    emojiInterval = setInterval(()=>{
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDuration = (Math.random()*3 + 3) + "s";
+        emoji.style.fontSize = (Math.random()*20 + 20) + "px";
+
+        document.body.appendChild(emoji);
+
+        setTimeout(()=>{
+            emoji.remove();
+        },5000);
+
+    },200);
+}
+
+function makeJoke(){
+    let nana = document.getElementById("nana").value.trim().toLowerCase();
+    let nani = document.getElementById("nani").value.trim().toLowerCase();
+    let output = document.getElementById("output");
+
+    if(nana === "" || nani === ""){
+        output.innerHTML = " Abe Dimag Se Paidal Naam To Likh😜";
+        return;
+    }
+
+    if(nana !== "darogi" || nani !== "tetri"){
+         alert("⚠️ Sahi Naam Likh Be Gadhi Kahi ke Naam V Galat Likh Rahi Hain 😎");
+        output.innerHTML = "";
+        return;
+    }
+
+    // 👇 BAS YE LINE ADD KI GAYI HAI
+    startEmojiRain();
+
+   let jokes = [
+    `Abe ${nana} aur ${nani} ki Lathorni Natni😁 , Kya chhahti h tu Padhai pr dhayan de yahi kregi Kya Tu🤣`,
+    `${nana} aur ${nani} Ki Ladli Thoda Kaam Bhi Kr Liya kr Bua paresan Ho jati hogi😜`,
+    `Lagta hai ${nana} aur ${nani} ki Tarah Tu V Nalla Rahegi Isliye Thoda Padhai pr Dhayan de Samjhi Nakchippi 😂`,
+    `${nana} Ki Natni Tera Dimag Ghutne me h na Mujhe pata Isliye Kishan Tumhe Lathorni Kahta Hai 😆`,
+    `${nani} Ki Natni Tu Mammy Ki Bat Nahi Manti Hain Aur Nautanki Karte Rahti Hain 🤓🔥`,
+    `Guro Aur Karuna Ka Help Kiya Kr Matlab Ghar Ka Kaam Nhi To Tera Naak Aur Chip Dunga😂`,
+    `Warning ⚠️: ${nana} aur ${nani} ki Natni Yah Mera Last Warning Hain Ab Se Kaam Kregi Aur Mammy Ka Bat v Manegi Nhi To 🤥🫢👊👊 🤣`
+];
+
+    let random = jokes[Math.floor(Math.random()*jokes.length)];
+    output.innerHTML = random;
+}
+</script>
+
+</body>
+</html>
